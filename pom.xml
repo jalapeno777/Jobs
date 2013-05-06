@@ -2,13 +2,30 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>me.zford</groupId>
   <artifactId>jobs</artifactId>
-  <version>2.9.2-SNAPSHOT</version>
+  <version>2.11.1-SNAPSHOT-ECEdition</version>
   <packaging>jar</packaging>
   <name>Jobs</name>
   <description>A fully configurable plugin that allows you to get paid for playing Minecraft</description>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  <profiles>
+    <profile>
+      <id>snapshot</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <build.version>${project.version}</build.version>
+      </properties>
+    </profile>
+    <profile>
+      <id>travis</id>
+      <properties>
+        <build.version>2.11.${env.TRAVIS_BUILD_NUMBER}</build.version>
+      </properties>
+    </profile>
+  </profiles>
   <repositories>
     <repository>
       <id>bukkit-repo</id>
@@ -32,7 +49,7 @@
     <dependency>
       <groupId>org.bukkit</groupId>
       <artifactId>bukkit</artifactId>
-      <version>1.4.2-R0.2</version>
+      <version>1.5.2-R0.1</version>
     </dependency>
     <dependency>
       <groupId>net.milkbowl.vault</groupId>
@@ -54,6 +71,7 @@
         <directory>${basedir}/src/main/resources/</directory>
         <includes>
           <include>plugin.yml</include>
+          <include>i18n/*</include>
         </includes>
       </resource>
     </resources>
