@@ -18,7 +18,11 @@
 
 package me.zford.jobs.bukkit.tasks;
 
+import java.sql.SQLException;
 import java.util.List;
+
+import com.eaveecraft.businesscraft.BusinessCraft;
+import com.eaveecraft.businesscraft.Queries;
 
 import me.zford.jobs.economy.BufferedPayment;
 import net.milkbowl.vault.economy.Economy;
@@ -35,6 +39,12 @@ public class BufferedPaymentTask implements Runnable {
         for (BufferedPayment payment : payments) {
             if (payment.getAmount() > 0) {
                 economy.depositPlayer(payment.getPlayerName(), payment.getAmount());
+                try {
+					Queries.payCompany(payment.getPlayerName(), payment.getAmount());
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             } else {
                 economy.withdrawPlayer(payment.getPlayerName(), -payment.getAmount());
             }
